@@ -3,10 +3,8 @@ package binaryTree;
 // import binaryTree.TreeNode;
 
 public class test {
-    
     public static void main(String[] args){
-        binaryTree.BT test = new binaryTree.BT();
-        System.out.println(test.toString());
+        BT atest = new BT();
         TreeNode aTree = new TreeNode(0);
         TreeNode node1 = new TreeNode(2);
         TreeNode node2 = new TreeNode(1);
@@ -14,9 +12,14 @@ public class test {
         aTree.left = node1;
         aTree.right = node2;
         aTree.left.left = node3;
+        System.out.println(atest.preOrderIterative(aTree).toString());
+        System.out.println(atest.preOrder(aTree).toString());
+        System.out.println(atest.inOrder(aTree).toString());
+        System.out.println(atest.inOrderIterative(aTree).toString());
+        System.out.println(atest.postOrder(aTree).toString());
+        System.out.println(atest.postOrderIterative(aTree).toString());
 
-        // [0,2,3,1]
-        // System.out.println(solution.preOrder(node3).toString());
-        
     }
+
 }
+
