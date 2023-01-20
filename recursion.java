@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class recursion {
     
-    public static int fib(int n){
+    public int fib(int n){
         //base case
         if(n == 0 || n==1){
             return n;
@@ -16,22 +16,36 @@ public class recursion {
         return result1+result2;
 
     }
-    public static int[] merge(int[] one, int[] two){
-        int[] result = new int[one.length-1 + two.length -1];
+    public int[] merge(int[] one, int[] two){
+        int[] result = new int[one.length + two.length];
         int oneIndex = 0;
         int twoIndex = 0;
         int resultIndex = 0;
-
-        while(oneIndex < one.length && twoIndex < two.length){
-            if (one[oneIndex] <= two[twoIndex]){
-                
-
+        while(resultIndex != result.length){
+            if(oneIndex < one.length && twoIndex < two.length){
+                if (one[oneIndex] <= two[twoIndex]){
+                    result[resultIndex++] = one[oneIndex++];
+                }
+                else result[resultIndex++] = two[twoIndex++];
             }
-        }
+            else if(oneIndex < one.length){
+                result[resultIndex++] = one[oneIndex++];
 
+            }   
+            else{
+                result[resultIndex++] = two[twoIndex++];
+            } 
+        }
+        
+        return result;
     }
     public static void main(String arg[]){
-        System.out.println(fib(3));
+        recursion test = new recursion();
+        // System.out.println(fib(3));
+        int[] a = new int[]{1,4,7};
+        int[] b = new int[]{2,4,9};
+
+        System.out.println(Arrays.toString(test.merge(a,b)));
 
     }
 }
