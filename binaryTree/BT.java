@@ -4,8 +4,8 @@ import java.util.*;
 // import binaryTree.binaryTree.*;
 
 public class BT {
-    public int size;
-    public TreeNode root;
+    private int size;
+    private TreeNode root;
     public BT(){
         this.size = 0;
         this.root = null;

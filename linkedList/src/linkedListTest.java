@@ -1,9 +1,11 @@
 /**
  * JUnit test class.
  */
-import hwk2.LinkedList;
 import org.junit.*;
 import org.junit.rules.Timeout;
+
+import linkedList.LinkedList;
+
 import static org.junit.Assert.*;
 
 public class linkedListTest
