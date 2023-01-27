@@ -28,13 +28,14 @@ public class graphSearch {
   }
 
   private void helper(char[] array, int index, List<String> result){
+
     if(index == array.length){
       result.add(new String(array));
       return;
     }
     for(int i = index; i < array.length; i++){
       swap(array, index, i);
-      helper(array, index + 1, result);
+      helper(array, index +1, result); // 错误点：we cannot use index++ in this case.
       swap(array, index, i);
     }
   }
