@@ -112,25 +112,29 @@ public class graphSearch {
      * @return all the combinations of coins which adds up to the target.
      */
     public List<List<Integer>> combinations(int target, int[] coins) {
-        // assume 1 cent is always at the first 
-        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        List<List<Integer>> result = new ArrayList<>();
         if(target == 0) return result;
-        ArrayList<Integer> cur = new ArrayList<>();
+        List<Integer> cur = new ArrayList<>();
         findCombinationDFS(target, coins, 0, result, cur);
         return result;
+        // index: The current coin we are considering at current level.
     }
 
-    private void findCombinationDFS(int target, int[] coins, int index, List<List<Integer>> result, ArrayList<Integer> cur){
+    private void findCombinationDFS(int target, int[] coins, int index, List<List<Integer>> result, List<Integer> cur){
         if(index == coins.length){
-            if(target == 0) result.add(cur);
+            if(target == 0) result.add(new ArrayList<Integer>(cur)); // copy 一份放进来，因为后面remove直接空了 
             return;
         }
+
         int maxNumNeeded = target/coins[index];
-        // 这一层选择拿几种这个面值。
-        // or-> num of branches
-        for(int i = 0; i < target/coins[index]; i ++){
+        // The maximum num of coin you can take for each level。
+        // for-> num of branches
+        //错误点 <= maximun num 
+        for(int i = 0; i <= target/coins[index]; i ++){
+            // i-> how many have you taken.
             cur.add(i);
-            findCombinationDFS(target, coins, index + 1, result, cur);
+            //错误点：更新target
+            findCombinationDFS(target - (i * coins[index]), coins, index + 1, result, cur);
             // 吐出来 去上一层的另一个Depth
             cur.remove(cur.size()-1);
         }
