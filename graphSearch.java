@@ -47,8 +47,98 @@ public class graphSearch {
         subSetsHelper(input, index + 1, cur, result);
     }
     
+    /***
+     * Given N pairs of parentheses “()”, return a list with all the valid permutations.
+     *                          []
+     *                  /                       \
+     *                [(]                       []
+     *              /    \
+     *          [((]     [()]
+     *          /           \
+     *        [(()]       [()(]
+     *        /             \
+     *      [(())]          [()()]
+     * @param n the number of pairs
+     * @return valid combination of n pairs parentheses
+     */
+    public List<String> validParentheses(int n) {
+        List<String> result = new ArrayList<String>();
+        if(n == 0) return result;
+        if(n == 1){
+            result.add("()");
+            return result;
+        }
+        StringBuilder cur = new StringBuilder();
+        parenHelper(n, 0, 0,cur, result);
+        return result;
+    }
 
-        
+    private void parenHelper(int n, int leftParen, int rightParen, StringBuilder cur, List<String> result){
+        if(cur.length() == 2*n){
+            result.add(cur.toString());
+        }
+        if(leftParen < n){ // < n 可以一直加
+            cur.append("(");
+            parenHelper(n, leftParen + 1, rightParen, cur, result);
+            //吐出来
+            cur.deleteCharAt(cur.length()-1);
+        }
+        if(rightParen < leftParen){
+            cur.append(")");
+            parenHelper(n, leftParen, rightParen + 1, cur, result);
+            cur.deleteCharAt(cur.length()-1);
+        }
+
+    }
+    
+
+    /**
+     * Given a number of different denominations of coins (e.g., 1 cent, 5 cents, 10 cents, 25 cents), 
+     * get all the possible ways to pay a target number of cents.
+     * coins = {2, 1}, target = 4, the return should be 
+     * [0, 4],   (4 cents can be conducted by 0 * 2 cents + 4 * 1 cents)
+     * [1, 2],   (4 cents can be conducted by 1 * 2 cents + 2 * 1 cents)
+     * [2, 0]    (4 cents can be conducted by 2 * 2 cents + 0 * 1 cents)
+     *                              remain: 99
+     * index = 0                /0*25   /1*25  |2*25  \3*25
+     * coin = 25            rem:99      rem:74  rem:49   rem:24
+     * index = 1        /0*10 /1*10 ...\  / /... \            
+     * coin = 10      rem:99  rem:89
+     *                    .
+     *                    .
+     *                    .  
+     * @param target the money we need to reach in total
+     * @param coins the type of coins we have
+     * @return all the combinations of coins which adds up to the target.
+     */
+    public List<List<Integer>> combinations(int target, int[] coins) {
+        // assume 1 cent is always at the first 
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if(target == 0) return result;
+        ArrayList<Integer> cur = new ArrayList<>();
+        findCombinationDFS(target, coins, 0, result, cur);
+        return result;
+    }
+
+    private void findCombinationDFS(int target, int[] coins, int index, List<List<Integer>> result, ArrayList<Integer> cur){
+        if(index == coins.length){
+            if(target == 0) result.add(cur);
+            return;
+        }
+        int maxNumNeeded = target/coins[index];
+        // 这一层选择拿几种这个面值。
+        // or-> num of branches
+        for(int i = 0; i < target/coins[index]; i ++){
+            cur.add(i);
+            findCombinationDFS(target, coins, index + 1, result, cur);
+            // 吐出来 去上一层的另一个Depth
+            cur.remove(cur.size()-1);
+        }
+    }
+
+
+
+
     /***
      * Core question 4: give all permutations of a string
      * @param input a string
@@ -153,6 +243,7 @@ public class graphSearch {
           for (int j = 0; j < size; j++) {
             String curr = result.get(j);
             //insert input[index] at all possible positions for each string in the list
+            // for-> num of branches
             for (int i = 0; i <= curr.length(); i++) {
               StringBuilder tmp1 = new StringBuilder(curr);
               String tmp2 = (tmp1.insert(i, input[index])).toString();
@@ -170,6 +261,11 @@ public class graphSearch {
     public static void main(String[] args){
         graphSearch test = new graphSearch();
         String a = "abc";
+        int parenPair = 2;
+        int[] coins = new int[]{34,31,29,16,2};
+
+        System.out.println(test.combinations(10, coins).toString());
+        System.out.println(test.validParentheses(parenPair).toString());
         System.out.println(test.permutationII(a).toString());
         System.out.println(test.subSets(a));
 
