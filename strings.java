@@ -3,16 +3,30 @@ import java.util.*;
 public class strings {
 
     public String reverse(String input) {
-        //"abcd" -- "dcba"
-        int size = input.length();
-        char[] inputString = input.toCharArray();
-        String res = "";
-        for(int i = 0; i < size; i++){
-            res += inputString[size-i-1];
-            System.out.println(res);
+        // using swap method: TC O(n), SC: O(n)
+        char[] inputArr = input.toCharArray();
+        int left = 0;
+        int right = inputArr.length - 1;
+        while(left < right){
+            char cur = inputArr[left];
+            inputArr[left] = inputArr[right];
+            inputArr[right] = cur;
+            left ++;
+            right --;
         }
-        return res;
-      }
+        return new String(inputArr);
+    
+    
+        //This method: TC: O(n), SC: O(n)
+        //   int size = input.length();
+        //   char[] inputString = input.toCharArray();
+        //   String res = "";
+        //   for(int i = 0; i < size; i++){
+        //       res += inputString[size-i-1];
+        //   }
+        //   return res;
+        // }
+    }
 
     public String reverseWords(String input) {
         String[] inputString = input.split(" ");
