@@ -28,14 +28,14 @@ public class BoundedQueue {
      * 
      */
     public Boolean poll(){
-
+        return true;
     }
     
     /*
      * 
      */
     public Integer peek(){
-
+        return -1;
     }
 
     public boolean isEmpty(){

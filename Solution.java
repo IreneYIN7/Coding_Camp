@@ -1,5 +1,5 @@
 import java.time.format.ResolverStyle;
-import java.util.Arrays;
+import java.util.*;
 
 public class Solution {
   public static void reverse(int[] array) {
@@ -107,6 +107,12 @@ public class Solution {
     }
     return res;
   }
+
+  public static void swap(List<Integer> inputArr, int one, int two){
+    int cur = inputArr.get(one);
+    inputArr.set(one, inputArr.get(two));
+    inputArr.set(two, cur);
+  }
   public static void main(String[] args)
     {
       int [] a = new int[] {3,3,2,2,3,3};
@@ -119,6 +125,12 @@ public class Solution {
       // reverse(array);
 
       // System.out.println(array.toString());
+      List<Integer> a1 = new ArrayList<>();
+      a1.add(1);
+      a1.add(2);
+      a1.add(3);
+      swap(a1, 1,2);
+      System.out.println(a1.toString());
 
     }
 }

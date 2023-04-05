@@ -1,3 +1,4 @@
+package graphSearch;
 import java.util.*;
 /***
  * Graph Search method: DFS

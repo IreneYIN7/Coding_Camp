@@ -1,3 +1,4 @@
+package binaryTree;
 import java.util.Arrays;
 import java.util.Dictionary;
 
@@ -65,64 +66,142 @@ public class binarySearch{
 
         int left = 0;
         int right = a.length-1;
-        
+        // 范围缩小到只有2个，3种case
         while( left < right - 1){
             int mid = left + (right - left) /2;
             if(a[mid] < target) left = mid;       // left = mid + 1 --> Both Ok
             else if(a[mid] > target) right = mid; // right = mid - 1 --> Both Ok
             else right = mid;                     // the right part of the current one is excluded
         }
+        // 3种case 
+        // 1. 2个都没有target. 
+        // 2. 2个都是target. 
+        // 3. 2个有一个是target
         if(a[left] != a[right] && a[right] == target) return right;
         else if(a[left] != a[right] && a[left] == target) return left;
         else if(a[left] == a[right] && a[left] == target) return left;
         else return -1;
     }
 
-    public static int findLast(int[] array, int target){
-        // find the last occurrence of the element.
-
-        int left = 0;
-        int right = array.length-1;
-        
-        while( left < right - 1){     // if there array are only two elements in the list.
-            int mid = left + (right - left) /2;
-            if(array[mid] < target) left = mid;       // left = mid + 1 --> Both Ok
-            else if(array[mid] > target) right = mid; // right = mid - 1 --> Both Ok
-            else left = mid;                      // the left part of the current one is excluded
+    public int firstOccur2(int[] array, int target) {
+        // Write your solution here
+        // edge cases
+        if(array.length == 0) return -1;
+        int targetIndex = findIndex(array, target);
+        if (targetIndex == -1) return targetIndex;
+        System.out.println("mid : " + targetIndex);
+        // check duplicated number. 
+        while(array[targetIndex - 1] == target){
+          targetIndex --;
         }
-        System.out.println(left);
-        System.out.println(right);
-        if(array[right] == target) return right;
-        else if(array[left] == target) return left;
-        else return -1;
-        // if (a[left] != a[right]){
-        //     return left;
-        // }
-        // else{
-        //     return right;
-        // }
+        return targetIndex;
     }
 
-    public static int[] findK_elements(int[] array, int target, int k){
-        //Find k elements that are cloest to the target
+    private int findIndex (int[] array, int target){
+      int first = 0;
+      int last = array.length -1;
+      // [3,3,3,3,6,9,16]
+      // mid = 3; -> 3
+      // first = 
+      while(first <= last){
+        int mid = first + (last - first) / 2;
+        if(array[mid] == target) return mid;
+        else if(array[mid] > target) last = mid - 1; // 错误点！
+        else first = mid + 1; //易错点！！
+      }
+      return -1;
+    }
+
+    public int[] kClosest(int[] array, int target, int k) {
+        // Write your solution here
         int[] res = new int[k];
-        int closest = findClosest(array, target);
-        res[0] = array[closest];
-        for(int i = 1; i<k; i++){
-            if(closest + i < array.length -1 && closest - i > 0){
-                if(Math.abs(array[closest] - array[closest-i]) < (array[closest+i] - array[closest])){
-                res[i] = array[closest-i];
-                }
-                else {res[i] = array[closest + i];}
-            }
-            else if(closest == array.length - 1){
-                res[i] = array[closest - i];
-            }
-            else res[i] = array[closest + i];
+
+        // edge
+        if(array.length == 0 || array == null || k  == 0) return res;
+
+        int left = 0;
+        int right = array.length - 1;
+        // find the two elements that are the cloest to the target
+        while (left < right - 1){
+            int mid = left + (right - left) /2;
+            if(array[mid] >= target) right = mid;
+            else left = mid;
         }
-        
+
+        // add k cloest to the res array
+        // first check left and right -> the two we find
+        // [1,2]
+        int cloest = -1;
+        if(Math.abs(array[left] - target) >= Math.abs(array[right] - target)){
+            cloest = right;
+        }
+        else{
+            cloest = left;
+        }
+        res[0] = array[cloest];
+
+        // add rest
+        left = cloest - 1;
+        right = cloest + 1;
+        for(int i = 1; i < k; i++) {
+            if (left >= 0 && right <= array.length - 1) {
+                if (Math.abs(array[left] - target) > Math.abs(array[right] - target)) res[i] = array[right++];
+                else res[i] = array[left--];
+            } else if (cloest == 0) {
+                res[i] = array[right++];
+            } else {
+                res[i] = array[left--];
+            }
+        }
         return res;
-        
+    }
+
+
+
+    public int[] kClosest2(int[] array, int target, int k) {
+        // Write your solution here
+        int[] res = new int[k];
+
+        // edge
+        if(array.length == 0 || array == null || k  == 0) return res;
+
+        int left = 0;
+        int right = array.length - 1;
+        // find the two elements that are the cloest to the target
+        while (left < right - 1){
+            int mid = left + (right - left) /2;
+            if(array[mid] >= target) right = mid;
+            else left = mid;
+        }
+
+        // add k cloest to the res array
+        // first check left and right -> the two we find
+        // [1,2]
+        int cloest = -1;
+        if(Math.abs(array[left] - target) >= Math.abs(array[right] - target)){
+            cloest = right;
+        }
+        else{
+            cloest = left;
+        }
+        res[0] = array[cloest];
+
+        // add rest
+        left = cloest - 1;
+        right = cloest + 1;
+        for(int i = 1; i < k; i++){
+            if(left >= 0 && right <= array.length - 1){
+                if(Math.abs(array[left] - target) > Math.abs(array[right] - target)) res[i] = array[right++];
+                else res[i] = array[left--];
+            }
+            else if(left < 0){
+                res[i] = array[right ++];
+            }
+            else{
+                res[i] = array[left --];
+            }
+        }
+        return res;
     }
 
     public static int FindTargetInAscendDesendOrder(int[] array, int target) {
@@ -188,7 +267,7 @@ public class binarySearch{
     public static final void main(String[] args){
         binarySearch sol = new binarySearch();
         int[] a = new int[]{-3,-2,4,4,4, 10,11,50};
-        Arrays.binarySearch(a, 4);
+        // Arrays.binarySearch(a, 4);
         // int[][] m = new int[][]{{2},{3},{1},{4}};
         // int[] res = Classic2DBS(m, 3);
         // System.out.println(toString1(res));
@@ -197,8 +276,10 @@ public class binarySearch{
         // System.out.println(findClosest(a, 11));
         // int [][] matrix = new int[][]{{1,2}, {3,4}};
         // System.out.println(Classic2DBS(matrix, 2));
-        int res = findLast(a, 4);
-        System.out.println(res);
+        // int res = findLast(a, 4);
+        int[] res = sol.kClosest(new int[]{1,3,3,6,9,9,12,15}, 10, 5);
+        System.out.println(res.toString());
+
         // int left = 2;
         // System.out.println(a[left--]);
         // System.out.println(left);
