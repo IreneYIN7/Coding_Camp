@@ -1,6 +1,6 @@
+package Array;
 import java.util.*;
 
-import javax.swing.SpringLayout;
 
 public class sortAlgo {
     public int[] mergeSort(int[] array) {

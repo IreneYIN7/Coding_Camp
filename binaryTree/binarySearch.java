@@ -1,8 +1,5 @@
 package binaryTree;
-import java.util.Arrays;
-import java.util.Dictionary;
 
-import javax.xml.transform.Source;
 
 public class binarySearch{
 
@@ -266,7 +263,7 @@ public class binarySearch{
 
     public static final void main(String[] args){
         binarySearch sol = new binarySearch();
-        int[] a = new int[]{-3,-2,4,4,4, 10,11,50};
+        // int[] a = new int[]{-3,-2,4,4,4, 10,11,50};
         // Arrays.binarySearch(a, 4);
         // int[][] m = new int[][]{{2},{3},{1},{4}};
         // int[] res = Classic2DBS(m, 3);
