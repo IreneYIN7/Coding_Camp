@@ -2,6 +2,9 @@ package graphSearch;
 
 public class wordSearch {
     /*
+        https://leetcode.com/problems/word-search/editorial/
+        backtrack: https://leetcode.com/explore/learn/card/recursion-ii/472/backtracking/2793/
+        
      * Given an m x n grid of characters board and a string word, return true if word exists in the grid.
      * The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. 
      * The same letter cell may not be used more than once.
@@ -59,9 +62,9 @@ public class wordSearch {
         int[] rowOffsets = {0, 1, 0, -1};
         int[] colOffsets = {1, 0, -1, 0};
         for (int d = 0; d < 4; ++d) {
-        if (backtrack(board, word, row + rowOffsets[d], col + colOffsets[d], index + 1))
-            // return without cleanup
-            return true;
+            if (backtrack(board, word, row + rowOffsets[d], col + colOffsets[d], index + 1))
+                // return without cleanup
+                return true;
         }  
         // 当前board[row][col] 上下左右都没有match的可能性
         board[row][col] = word.charAt(index); // backrack恢复走别的路 -- 吃吐守恒
