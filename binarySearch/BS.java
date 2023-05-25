@@ -63,12 +63,58 @@ public class BS {
       }
       // TC: O(log(m*n))
       // SC: O(1)
+
+    /**
+     * Given a target integer T and an integer array A sorted in ascending order, find the index i in A such that A[i] is closest to T.
+
+Assumptions
+
+There can be duplicate elements in the array, and we can return any of the indices with same value.
+     */
+    public int closest(int[] array, int target) {
+        // Write your solution here
+        // corner case:
+        if(array.length == 0 || array == null) return -1;
+        // 1 4 6
+        //   m
+        // 1 4
+        // when there is only 2 element left, stop and check
+        int front = 0;
+        int end = array.length - 1;
+        while(front < end - 1){ // 2 elements left
+          int mid = (end - front) /2 + front;
+          System.out.println(mid);
+          if(array[mid] == target) return mid;
+          else if(array[mid] > target){
+            end = mid;
+            System.out.println("front " + front);
+          }
+          else {
+            front = mid;
+            System.out.println("end " + end);
+          }
+        }
+    
+        // check closest:
+        System.out.println("front: " + front + " end: " + end);
+        if(Math.abs(array[front]-target) > Math.abs(array[end] - target)) return end;
+        else return front;
+      }
+      // 3,4,5,6,6,12,16  f = 0, e = 6, m = 3
+      //       m
+      // 6,6,12,16        f = 3, e = 6, m = 4
+      //   m
+      // 6,12, 16         f = 4, e = 6, m = 5
+      //   m
+      // 6, 12            f = 4, e = 5, m -- pass
+      // t
     
     public static void main(String args[]){
         BS solu = new BS();
-        int[] a = new int[]{3,4,5,6,6,9,16};
-        int target = 5;
-        System.out.println(solu.binarySearch(a, target));
+        int[] a = new int[]{3,4,5,6,6,12,16};
+        int target = 10;
+        // System.out.println(solu.binarySearch(a, target));
+        System.out.println(solu.closest(a, target));
     }
     
 }
