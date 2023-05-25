@@ -109,12 +109,38 @@ There can be duplicate elements in the array, and we can return any of the indic
       // 6, 12            f = 4, e = 5, m -- pass
       // t
     
+    /**
+     * Given a target integer T and an integer array A sorted in ascending order, find the index of the first occurrence of T in A or return -1 if there is no such index.
+
+    Assumptions: There can be duplicate elements in the array.
+     */
+
+     public int firstOccur(int[] array, int target) {
+        //corner case:
+        if(array == null || array.length == 0) return -1;
+        // found target first, then check neighbors
+        int found = binarySearch(array, target);
+        System.out.println(found);
+        if (found <= 0) return found;
+        else{
+          // found target
+          while(found > 0){ // can't be >=, since 0-1 = -1 --> out of index
+            if(array[found] == array[found - 1]) found -= 1;
+            else return found;
+          }
+          return found;
+        }
+    
+      }
+
+
+
     public static void main(String args[]){
         BS solu = new BS();
-        int[] a = new int[]{3,4,5,6,6,12,16};
-        int target = 10;
+        int[] a = new int[]{3,4,5,6,6,9,16};
+        int target = 3;
         // System.out.println(solu.binarySearch(a, target));
-        System.out.println(solu.closest(a, target));
+        System.out.println(solu.firstOccur(a, target));
     }
     
 }
