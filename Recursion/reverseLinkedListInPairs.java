@@ -12,6 +12,20 @@ public class reverseLinkedListInPairs {
             next = null;
         }
     }
+    public ListNode reverseSingleLinkedList(ListNode head) {
+        // Write your solution here
+        // 1 -> 2 -> 3 -> 4 -> null
+        // 1 -> set -> null
+        // 1 -> 2 -> null
+        // base case:
+        if( head == null || head.next == null) return head;
+        // recursive case:
+        ListNode reversed = reverseSingleLinkedList(head.next); // new listNode points to the head 
+        // 错误点：reference instead of a copy of the listNode. Has to change based on head.
+        head.next.next = head; // 错误：reversed.next = head --> wrong!!
+        head.next = null;
+        return reversed;
+    }
     /**
      * Reverse pairs of elements in a singly-linked list.
      * eg: 
