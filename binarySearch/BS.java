@@ -143,6 +143,19 @@ There can be duplicate elements in the array, and we can return any of the indic
         return found;
       }
 
+      public int lastOccur2(int[] array, int target){
+        int front = 0;
+        int end = array.length - 1;
+        // get two element
+        while(front < end - 1){
+          int mid = (end - front) / 2 + front;
+          if(array[mid] <= target) front = mid;
+          else end = mid;
+        }
+        if(array[end] == target) return end;
+        else if(array[front] == target) return front;
+        else return -1;
+      }
 
     public static void main(String args[]){
         BS solu = new BS();
