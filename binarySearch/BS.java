@@ -132,7 +132,16 @@ There can be duplicate elements in the array, and we can return any of the indic
         }
     
       }
-
+      public int lastOccur(int[] array, int target) {
+        // Write your solution here
+        int found = binarySearch(array, target);
+        if (found < 0) return found;
+        while(found < array.length - 1){
+          if(array[found] == array[found + 1]) found += 1;
+          else return found;
+        }
+        return found;
+      }
 
 
     public static void main(String args[]){
