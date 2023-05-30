@@ -45,8 +45,21 @@ public class MiddleNodeOfLL {
       }
     
     // Another way - important! 快慢指针 - improve space complexity of O(1)
-    
 
+    public ListNode middleNode2(ListNode head) {
+        // Write your solution here
+        // use 快慢指针！
+        if(head == null || head.next == null) return head;
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast.next != null && fast.next.next != null){ // error point: 只需要确保fast的后面两位不是Null就好
+          slow = head.next;
+          fast = head.next.next;
+        }
+        return slow;
+    }
+    // Tc: O(n)
+    // Sc: O(1)
     
     
     private String printLL(ListNode head){
