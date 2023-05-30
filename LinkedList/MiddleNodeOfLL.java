@@ -53,8 +53,8 @@ public class MiddleNodeOfLL {
         ListNode slow = head;
         ListNode fast = head;
         while(fast.next != null && fast.next.next != null){ // error point: 只需要确保fast的后面两位不是Null就好
-          slow = head.next;
-          fast = head.next.next;
+          slow = head.next; // slow.next not head.next
+          fast = head.next.next; // fast.next.next not head.next.next
         }
         return slow;
     }
