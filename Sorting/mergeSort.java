@@ -2,64 +2,50 @@ package Sorting;
 import java.util.*;
 
 public class mergeSort {
-    public int[] mergeSort(int[] array) {
-        // Write your solution here
-        // divide and conquer -- recursion.
-        // base case: if left >= right -> only 1 ele, return itself.
-        // recursive case: 
-        //     mergeSortHelper(array, left, mid)
-        //     mergeSortHelper(array, mid, right)
-        
-        // corner case: 
-        if(array == null || array.length == 0) return array;
-        
-        int[] result = new int[array.length];
-        helper(array, result, 0, array.length - 1);
-        return array;
-      }
-    
-      private void helper(int[] array, int[] result, int front, int end){
-        // base case
-        if(front >= end) return;;
-        int mid = front +(end- front) / 2;
-        // recursive case:
-        helper(array, result, front, mid);
-        helper(array, result, mid + 1, end);
-        // recursive steps
-        merge(array, result, front, mid, end);
-      }
-    
-      private void merge(int[] array, int[] result, int front, int mid, int end){
-        // 3 2 1
-        // 3 2       1
-        // 3    2     1
-        // 3    2
-        // copy content to the result array, merge from the result array.
-        System.out.println("array: " + Arrays.toString(array) + " result :" + Arrays.toString(result));
-        System.out.println("front: " + array[front] + " end: " + array[end]);
-        for(int i = front; i <= end; i++){
-          result[i] = array[i];
-        }
-        int leftIndex = front;
-        int rightIndex = mid + 1;
-        while(leftIndex <= mid && rightIndex <= end){ // sort in order
-          if(result[leftIndex] > result[rightIndex]){
-            array[front++] = result[rightIndex++];
-          }
-          else{
-            array[front ++] = result[leftIndex++];
-          }
-        }
-        // if there is still element left, add directly to the result array.
-        while(leftIndex <= mid){
-          array[front++] = result[leftIndex++];
-        }
+  public int[] mergeSort(int[] array) {
+    // Write your solution here
+    // divide two and sort the half and then combine together
+    // need a helper array to assist the merge
+    // corner case
+    if(array == null || array.length == 0) return array;
+    int[] helper = new int[array.length];
+    mergeSortHelper(array, helper, 0, array.length - 1);
+    return array;
+  }
 
+  private void mergeSortHelper(int[] array, int[] helper, int front, int end){
+    // base case:
+    if(front >= end) return;
+    // recursive case:
+    int mid = front + (end - front) / 2;
+    mergeSortHelper(array, helper, front, mid);
+    mergeSortHelper(array, helper, mid + 1, end); // Note: 注意是mid + 1
+    merge(array, helper, front, mid, end);
+  }
 
-        // while(rightIndex <= end){
-        //   result[front++] = array[rightIndex++];
-        // }
+  private void merge(int[] array, int[] helper, int front, int mid, int end){
+    // merge two array : from front to mid, and from mid to end.
+    // 1. fill in helper array with the ele from front to end
+    for(int i = front; i <= end; i++){
+      helper[i] = array[i];
+    }
+    // sort merge --> change array based on checking helper
+    int leftIndex = front;
+    int rightIndex = mid + 1; // ? what if = mid. -> should be the same 
+    while(leftIndex <= mid && rightIndex <= end){
+      if(helper[leftIndex] <= helper[rightIndex]){
+        array[front ++] = helper[leftIndex ++]; // 用left array 作为比较对象
       }
+      else {
+        array[front++] = helper[rightIndex++];
+      }
+    }
+    // if leftIndex didn't reach mid
+    while(leftIndex <= mid){
+      array[front++] = helper[leftIndex++];
+    }
+
+  }
     
     public static void main(String args[]){
         mergeSort solu = new mergeSort();
