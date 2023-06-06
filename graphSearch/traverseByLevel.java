@@ -39,9 +39,13 @@ public class traverseByLevel {
 
     public static void main(String[] args){
         traverseByLevel sol = new traverseByLevel();
-        TreeNode tree = sol.new TreeNode(5);
-        tree.left = sol.new TreeNode(8);
+        TreeNode tree = sol.new TreeNode(1);
+        tree.left = sol.new TreeNode(2);
         tree.right = sol.new TreeNode(3);
+        tree.left.left = sol.new TreeNode(4);
+        tree.left.right = sol.new TreeNode(5);
+        tree.right.left = sol.new TreeNode(6);
+        tree.right.right = sol.new TreeNode(7);
         
         System.out.println(sol.layerBylayer(tree).toString());
     }
