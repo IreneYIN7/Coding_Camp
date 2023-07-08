@@ -51,33 +51,36 @@ public class compressionII {
       pos++;
     }
     System.out.println(index);
-    return new String(res);
+    int end = index + 1;
+    return new String(res,0,end);
   }
 
   public int copyDigit(int counter, char[] res, int index){
+    System.out.println("digit is: " + counter);
     int len = 0;
     for(int i = counter; i > 0; i/=10){
             index ++;
             len ++;
     }
     for(int i = counter; i > 0; i/=10){
+        System.out.println(i);
         int digit = i % 10;
-        // System.out.println(digit);
+        
+        System.out.println(digit);
         res[index--] = (char) ('0' + digit); // reverse print number. due to the way of getting digits.
     }
     index += len + 1;
-    
+    System.out.println("index here: " + index);
     return index;
   }
 
   public static void main(String args[]){
     compressionII sol = new compressionII();
     int a = 0;
-    String input = "lpxqdkgvpdqqzahwheunsiyatdstyvqt";
+    String input = "qgvsuvqjewdfaivwbkvsfhzry";
     String output = sol.compress(input);
-    System.out.println(sol.compress(input));
-    System.out.println(input.length());
     System.out.println(output.length());
+    System.out.println(output);
   }
     
 }
