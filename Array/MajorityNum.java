@@ -1,5 +1,6 @@
 package Array;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +36,8 @@ public class MajorityNum {
     MajorityNum sol = new MajorityNum();
     int[] a = {1,2,1,2,2};
     System.out.println(sol.majority(a));
+    System.out.println(Arrays.asList(a).toString());
+    List<Integer> b = Arrays.asList(1,2,3); 
   }
     
 }
